@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <a-component
+      :a.sync="a"
+      :b.sync="b"
+    ></a-component>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+  <script>
+    Vue.component('a-component', {
+      props: {
+        a: String,
+        b: String
+      },
+      template: `
+        <div>
+          <p>{{a}}</p>
+          <p>{{b}}</p>
+          <button @click="handleClick">按钮</button>
+        </div>
+      `,
+      methods: {
+        handleClick () {
+          // 指定的事件名
+          this.$emit('update:a', 'a:change')
+          this.$emit('update:b', 'b:change')
+        }
+      }
+    })
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        name: '.sync',
+        a: 'a',
+        b: 'b'
+      }
+    })
+  </script>
+</body>
+</html>

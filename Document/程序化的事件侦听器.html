@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <my-component ref="my"></my-component>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+  <script>
+    Vue.component('my-component', {
+      template: `
+        <div>
+          <button @click="handleOnceClick">once</button>
+          <button @click="$emit('e')">e</button>
+          <button @click="$emit('off')">off</button>
+        </div>
+      `,
+      methods: {
+        handleOnceClick () {
+          this.$emit('once')
+        }
+      }
+    })
+
+    const app = new Vue({
+      el: '#app',
+      created: function () {
+        // 程序化的方式监听mounted的hook
+        this.$once('hook:mounted', function () {
+          console.log('mounted')
+          this.$nextTick(() => {
+            this.$refs.my.$once('once', function () {
+              console.log('once')
+            })
+
+            this.$refs.my.$on('e', function () {
+              console.log('e')
+            })
+
+            this.$refs.my.$on('off', function () {
+              this.$off('e')
+            })
+          })
+        })
+      }
+    })
+  </script>
+</body>
+</html>

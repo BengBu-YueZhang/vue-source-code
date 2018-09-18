@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <a-component
+      @change="onChangeEvent"
+      @input="onInputEvent"
+    ></a-component>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+  <script>
+    // 将父作用域的事件监听器指定监听组件的某个子元素上
+    Vue.component('a-component', {
+      inheritAttrs: false,
+      template: `
+        <div>
+          <input
+            v-on="$listeners"
+            type="text"/>
+        </div>
+      `
+    })
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        name: '特性继承'
+      },
+      methods: {
+        onInputEvent () {
+          console.log('input')
+        },
+
+        onChangeEvent () {
+          console.log('change')
+        }
+      }
+    })
+  </script>
+</body>
+</html>

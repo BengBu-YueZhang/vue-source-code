@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <my-component>
+      <span>123</span>
+      <span>456</span>
+      <span>789</span>
+    </my-component>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+  <script>
+    Vue.component('my-component', {
+      data () {
+        return {
+          name: '$slots'
+        }
+      },
+      mounted () {
+        // 包含slot插槽中的节点
+        console.log(this.$slots.default)
+      },
+      template: `
+        <div>
+          <slot></slot>
+        </div>
+      `
+    })
+
+    const app = new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+</html>

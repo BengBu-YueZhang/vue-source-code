@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <my-component>
+      <template slot-scope="scope">
+        🍔 🥪 {{scope.row.name}}
+        <div>
+          🍎 🍕 🥪
+        </div>
+      </template>
+    </my-component>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+  <script>
+    Vue.component('my-component', {
+      data () {
+        return {
+          row: {
+            name: 'row'
+          }
+        }
+      },
+      
+      mounted () {
+        // 包含slot插槽中的节点(vnode的列表)
+        console.log(this.$scopedSlots)
+      },
+      
+      template: `
+        <div>
+          <slot :row="row"></slot>
+        </div>
+      `
+    })
+
+    const app = new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+</html>
